@@ -1,22 +1,15 @@
 import React from 'react'
+import './Track.css'
 
 const Track = ({track, onAdd, onRemove, isRemoval}) => {
-    const renderAction = (isRemoval) => {
+
+    const renderAction = () => {
       if(isRemoval) {
         return (
-            <button 
-            className="Track-action" 
-            onClick={()=> onAdd}
-            >+</button>
+          <button className="Track-action"onClick={() => onRemove}>-</button>
         )
-      } else {
-        return (
-          <button 
-          className="Track-action"
-          onClick={()=> onRemove}
-          >-</button>
-        )
-      }
+      } 
+      return <button className="Track-action" onClick={() => onAdd}>+</button>
     }
     return (
           <div className="Track">
@@ -24,7 +17,7 @@ const Track = ({track, onAdd, onRemove, isRemoval}) => {
               <h3>{track.name}</h3>
               <p>{track.artist} | {track.album} </p>
             </div>
-            {renderAction(isRemoval)}
+            {renderAction()}
           </div>
     )
 }

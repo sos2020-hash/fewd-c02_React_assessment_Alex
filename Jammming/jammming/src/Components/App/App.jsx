@@ -3,34 +3,25 @@ import './App.css';
 import SearchBar from '../SearchBar/SearchBar';
 import Playlist from '../Playlist/Playlist';
 import SearchResults from '../SearchResults/SearchResults';
+import Spotify from '../../util/Spotify';
 
 function App() {
-  const [searchResults, setsearchResults] = useState([{
-    id:'',
-    name:'',
-    artist:'',
-    album:'',
-  }]);
+  const [searchResults, setsearchResults] = useState([]);
+  const [playlistName, setPlaylistName] = useState('New Playlist');
+  const [playlistTracks, setPlaylistTracks] = useState([]);
 
-  const [playlistName, setPlaylistName] = useState('');
-
-  const [playlistTracks, setPlaylistTracks] = useState([{
-    id:'',
-    name:'',
-    artist:'',
-    album:'',
-  }]);
-
-  const addTrack = (newTrack) => {
-    if (playlistTracks.find(
-      track => track.id === newTrack.id)) {
+  const addTrack = (track) => {
+    console.log('add');
+    let tracks = playlistTracks
+    if (tracks.find(
+      savedsTrack => savedsTrack.id === track.id)) {
         return;
       }
-      setPlaylistTracks([...playlistTracks, newTrack])
+      setPlaylistTracks([...playlistTracks, track])
     }
 
   const removeTrack = (deleteTrack) => {
-    const renewPlaylist = playlistTracks.filter(track.id !== deleteTrack.id)
+    const renewPlaylist = playlistTracks.filter(track=> track.id !== deleteTrack.id)
     setPlaylistTracks(renewPlaylist)
   }
 
@@ -39,12 +30,19 @@ function App() {
   }
 
   const savePlaylist = () => {
-    const tracksURIs = playlistTracks.map((track) => track.uri)
-    return tracksURIs
-  }
+    const trackUris = playlistTracks.map(track => track.uri);
+    Spotify.savePlaylist(playlistName, trackUris).then(() => {
+      setPlaylistName('New Playlist');
+      setPlaylistTracks([]) 
+      });
+    };
 
-  const search = (searchTerm) => {
-    console.log(searchTerm);
+
+
+  const search = (term) => {
+    Spotify.search(term).then(searchResults => {
+      setsearchResults(searchResults);
+    });
   }
 
   return (
@@ -61,8 +59,8 @@ function App() {
       <Playlist 
       playlistName={playlistName} 
       playlistTracks={playlistTracks}
-      onAdd={addTrack}
-      onRemove={removeTrack}
+      onAdd={() => addTrack}
+      onRemove={() => removeTrack}
       onNameChange={updatePlaylistName}
       onSave={savePlaylist}
       />

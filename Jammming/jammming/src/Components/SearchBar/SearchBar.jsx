@@ -1,13 +1,19 @@
-import React from 'react'
-
+import React,{useState} from 'react'
+import './Search.css'
 const SearchBar = ({onSearch}) => {
+    const [term, setTerm] = useState('');
+
     const handleTermChange = (event) => {
-        onSearch(event.target.value)
+        setTerm(event.target.value)
+    }
+
+    const search = () => {
+        onSearch(term)
     }
     return (
         <div className="SearchBar">
             <input onChange={handleTermChange} placeholder="Enter A Song, Album, or Artist" />
-            <button className="SearchButton">SEARCH</button>
+            <button className="SearchButton" onClick={search}>SEARCH</button>
         </div>      
     )
 }
