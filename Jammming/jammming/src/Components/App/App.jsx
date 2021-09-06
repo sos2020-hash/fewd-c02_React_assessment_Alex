@@ -12,17 +12,17 @@ function App() {
   Spotify.getAccessToken();
 
   const addTrack = (track) => {
-    console.log('add');
     let tracks = playlistTracks
     if (tracks.find(
-      savedsTrack => savedsTrack.id === track.id)) {
+      savedTrack => savedTrack.id === track.id)) {
         return;
       }
       setPlaylistTracks([...playlistTracks, track])
     }
 
   const removeTrack = (deleteTrack) => {
-    const renewPlaylist = playlistTracks.filter(track=> track.id !== deleteTrack.id)
+    let tracks = playlistTracks
+    const renewPlaylist = tracks.filter(track=> track.id !== deleteTrack.id)
     setPlaylistTracks(renewPlaylist)
   }
 
@@ -64,6 +64,7 @@ function App() {
       playlistTracks={playlistTracks}
       onNameChange={updatePlaylistName}
       onSave={savePlaylist}
+      onRemove={removeTrack}
       />
     </div>
   </div>
