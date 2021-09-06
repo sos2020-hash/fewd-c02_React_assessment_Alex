@@ -3,6 +3,7 @@ import Track from '../Track/Track'
 import './TrackList.css'
 
 const TrackList = ({tracks, onAdd, onRemove, isRemoval}) => {
+    console.log(onAdd);
     return (
         <div className="TrackList">
             {tracks.map((track) => 
@@ -10,8 +11,8 @@ const TrackList = ({tracks, onAdd, onRemove, isRemoval}) => {
             key={track.id}
             track={track} 
             onAdd={onAdd} 
-            isRemoval={isRemoval}
             onRemove={onRemove}
+            isRemoval={isRemoval}
             />)}
         </div>
     )

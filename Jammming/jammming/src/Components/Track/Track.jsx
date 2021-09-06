@@ -6,10 +6,10 @@ const Track = ({track, onAdd, onRemove, isRemoval}) => {
     const renderAction = () => {
       if(isRemoval) {
         return (
-          <button className="Track-action"onClick={() => onRemove}>-</button>
+          <button className="Track-action"onClick={() => onRemove(track)}>-</button>
         )
       } 
-      return <button className="Track-action" onClick={() => onAdd}>+</button>
+      return <button className="Track-action" onClick={() => onAdd(track)}>+</button>
     }
     return (
           <div className="Track">

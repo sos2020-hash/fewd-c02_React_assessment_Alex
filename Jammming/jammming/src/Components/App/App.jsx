@@ -9,6 +9,7 @@ function App() {
   const [searchResults, setsearchResults] = useState([]);
   const [playlistName, setPlaylistName] = useState('New Playlist');
   const [playlistTracks, setPlaylistTracks] = useState([]);
+  Spotify.getAccessToken();
 
   const addTrack = (track) => {
     console.log('add');
@@ -55,12 +56,12 @@ function App() {
     <div class="App-playlist">
       <SearchResults 
       searchResults={searchResults}
+      onAdd={addTrack}
+      onRemove={removeTrack}
       />
       <Playlist 
       playlistName={playlistName} 
       playlistTracks={playlistTracks}
-      onAdd={() => addTrack}
-      onRemove={() => removeTrack}
       onNameChange={updatePlaylistName}
       onSave={savePlaylist}
       />
